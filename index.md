@@ -1,5 +1,6 @@
 ---
 layout: default
+description: Very simple CLI to help you manage your list of todos.
 ---
 
 Text can be **bold**, _italic_, or ~~strikethrough~~.
