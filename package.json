@@ -7,8 +7,9 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "test": "jest",
+    "build": "webpack",
+    "serve": "npm run build && bundle exec jekyll serve"
   },
   "repository": {
     "type": "git",
@@ -21,9 +22,12 @@
   },
   "homepage": "https://github.com/todo-cli/todo-cli.github.io#readme",
   "dependencies": {
-    "github-api": "^3.4.0"
+    "github-api": "^3.4.0",
+    "jquery": "^3.6.0",
+    "semver": "^7.3.5"
   },
   "devDependencies": {
+    "jest": "^27.1.0",
     "webpack": "^5.51.2",
     "webpack-cli": "^4.8.0"
   }

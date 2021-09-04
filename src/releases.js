@@ -1,85 +1,55 @@
+const semVer = require("semver");
 
 
-
-class MyRelease {
-
-    constructor(assets) {
-        this.assets = assets;
+function extractReleases(response) {
+    const releases = [];
+    for (const release of response.data) {
+        releases.push({
+            name: release.name,
+            version: extractVersion(release.name),
+            binaries: extractBinaries(release.assets)            
+        })
     }
-
-    names() {
-        var names = [];
-        for (const asset of this.assets) {
-            names.push(asset.name);
-        }
-        return names;
-    }
-
+    return releases;
 }
 
+function extractVersion(release){
+    const semanticVersionWithOption_v_prefix = /^(?:v?)(.*)$/mg;
+    return semanticVersionWithOption_v_prefix.exec(release)[1];
+}
+
+function extractBinaries(assets) {
+    const binaries = [];
+    for (const asset of assets) {
+        binaries.push({
+            binaryType: typeOfArtefact(asset.name),
+            name: asset.name,
+            downloadUrl: asset.browser_download_url
+        })
+    }
+
+    return binaries;
+}
 
 function typeOfArtefact(name) {
-    const deb = /asdsa/;
-    const rpm = /adasd/;
-    const binaryLinux = /adas/;
-    const binaryWindows = /adas/;
+    const deb = /^todo-cli.*.deb$/gm;
+    const rpm = /^todo-cli.*.rpm$/gm;
 
     switch (true) {
         case deb.test(name):
-            break;
+            return "deb";
         case rpm.test(name):
-            break;
-        case binaryLinux.test(name):
-            break;
-        case binaryWindows.test(name):
-            break;
-        case _:
-            break
-    }
-}
-
-class Artefact {
-    constructor(name, downloadUrl) {
-        this.type = "Undefined-Artefact"
-        this.name = name;
-        this.downloadUrl = downloadUrl;
-    }
-}
-
-class DebArtefact extends Artefact {
-    constructor(name, downloadUrl) {
-        this.name = name;
-        this.downloadUrl = downloadUrl;
+            return "rpm";
+        default:
+            return "unknown";
     }
 }
 
 
-class RpmArtefact extends Artefact {
-    constructor(name, downloadUrl) {
-        this.name = name;
-        this.downloadUrl = downloadUrl;
-    }
+function latestRelease(releases){
+    return releases.sort(function(a, b) {
+        return semVer.compare(b.version, a.version);
+    });
 }
 
-
-class BinaryLinux extends Artefact {
-    constructor(name, downloadUrl) {
-        this.name = name;
-        this.downloadUrl = downloadUrl;
-    }
-}
-
-class BinaryWindows extends Artefact {
-    constructor(name, downloadUrl) {
-        this.name = name;
-        this.downloadUrl = downloadUrl;
-    }
-}
-
-
-function extractAssets(response){
-    let foo = response.data;
-    return new MyRelease(foo[0].assets);
-}
-
-module.exports = extractAssets;
+module.exports = { extractReleases, typeOfArtefact, latestRelease};

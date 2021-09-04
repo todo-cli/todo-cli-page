@@ -1,23 +1,52 @@
 const Github = require("github-api");
-const extractAssets = require("./releases");
+const {latestRelease, extractReleases} = require("./releases");
+const $ = require("jquery");
 
 const gh = new Github();
 const repo = gh.getRepo("cmhteixeira", "todo-cli");
 
-const t = repo.listReleases(function(error, result, request){
+const responseP = repo.listReleases(function(error, result, request){
 });
 
-// t.then(extractAssets).then(function(res){
-//     console.log(res);
-//     // console.log(JSON.stringify(res));
-// });
+
+let allReleasesP = responseP.then(function(response){
+   return extractReleases(response);
+ });
 
 
-t.then(function(a){
-    // console.log(a);
-    let y = extractAssets(a);
-    console.log(y.names());
+var stateAllReleases = {};
+responseP.then(function(response){
+   stateAllReleases = extractReleases(response);
+});
 
-    // console.log(JSON.stringify(y.names));
-})
 
+var latest = {};
+allReleasesP.then((allReleases => {
+    latest = latestRelease(allReleases)[0];
+}))
+
+// We know what the div 'content' contains.
+$("#content").click(function(event){
+    event.preventDefault();
+    let downloadLink = maybeDownloadLink(event.target);
+    if (downloadLink == null || downloadLink == undefined || downloadLink == "") {
+        // do nothing
+    } else {
+        window.open(downloadLink);
+    }
+});
+
+
+function maybeDownloadLink(clickTarget) {
+    let expectedRegex = /^latest#(.*)$/gm;
+    let hReference = clickTarget.getAttribute("href");
+    if (hReference == null || hReference == "") {
+        return null;
+    } 
+
+    let regexResult = expectedRegex.exec(hReference);
+    let binaryTypeDesired = regexResult[1];
+    return latest.binaries.find((element) => {
+        return element.binaryType == binaryTypeDesired;
+    }).downloadUrl;
+}
