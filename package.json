@@ -1,0 +1,30 @@
+{
+  "name": "todo-cli.github.io",
+  "version": "0.1.0",
+  "description": "[![.github/workflows/ci.yaml](https://github.com/pages-themes/cayman/actions/workflows/ci.yaml/badge.svg)](https://github.com/pages-themes/cayman/actions/workflows/ci.yaml) [![Gem Version](https://badge.fury.io/rb/jekyll-theme-cayman.svg)](https://badge.fury.io/rb/jekyll-theme-cayman)",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/todo-cli/todo-cli.github.io.git"
+  },
+  "author": "Carlos Teixeira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/todo-cli/todo-cli.github.io/issues"
+  },
+  "homepage": "https://github.com/todo-cli/todo-cli.github.io#readme",
+  "dependencies": {
+    "github-api": "^3.4.0"
+  },
+  "devDependencies": {
+    "webpack": "^5.51.2",
+    "webpack-cli": "^4.8.0"
+  }
+}
