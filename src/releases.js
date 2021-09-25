@@ -34,12 +34,18 @@ function extractBinaries(assets) {
 function typeOfArtefact(name) {
     const deb = /^todo-cli.*.deb$/gm;
     const rpm = /^todo-cli.*.rpm$/gm;
+    const linuxBinary = /^todo-cli$/gm;
+    const windowsBinary = /^todo-cli.exe$/gm;
 
     switch (true) {
         case deb.test(name):
             return "deb";
         case rpm.test(name):
             return "rpm";
+        case linuxBinary.test(name):
+            return "linuxBinary";
+        case windowsBinary.test(name):
+            return "windowsBinary";            
         default:
             return "unknown";
     }

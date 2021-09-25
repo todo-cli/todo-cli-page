@@ -35,7 +35,7 @@ If you have a different Linux distribution or if you prefer to use the executabl
 
 
 ### Steps
-1.  Download the [latest](latest#deb) executable.
+1.  Download the [latest](latest#linuxBinary) executable.
 2.  Move it to any path of your choice.
 3.  Make sure the executable file is indeed _executable_. If not, run `sudo chmod +x <the-executable>`.   
 3.  Add said path to the PATH variable. Normally you will add the following line to your `~/.bashrc` file.  
