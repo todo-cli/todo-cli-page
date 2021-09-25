@@ -1,9 +1,7 @@
 ---
 layout: default
-description: Very simple CLI to help you manage your list of todos.
+description: Uncomplicated tool to keep track of your list of todos on the command line.
 ---
-
-An uncomplicated tool to keep track of your list of todos on the command line.
 
 ### Usage
 
